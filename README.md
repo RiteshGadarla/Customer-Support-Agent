@@ -205,7 +205,45 @@ CSAgent is physically blocked from bypassing these gates:
 - Docker (for Redis, PostgreSQL, Qdrant)
 - A configured `.env` file in both `backend/` and `frontend/` (see `.env.example` in each directory)
 
-### 1. Clone the Repository
+### 1. Infrastructure Setup (Docker)
+
+To run the required services (Redis, Qdrant, PostgreSQL), use the following Docker commands:
+
+#### Pull Images
+```bash
+docker pull redis:alpine
+docker pull qdrant/qdrant
+docker pull postgres:alpine
+```
+
+#### Run Containers
+```bash
+# Start Redis
+docker run -d --name csagent-redis -p 6379:6379 redis:alpine
+
+# Start Qdrant (Vector Database)
+docker run -d --name csagent-qdrant -p 6333:6333 -p 6334:6334 \
+    -v $(pwd)/qdrant_storage:/qdrant/storage \
+    qdrant/qdrant
+
+# Start PostgreSQL
+docker run -d --name csagent-postgres \
+    -e POSTGRES_PASSWORD=your_password \
+    -e POSTGRES_DB=csagent \
+    -p 5432:5432 \
+    postgres:alpine
+```
+
+### 2. Linux Environment Setup
+
+Ensure your system has the necessary build tools and libraries:
+
+```bash
+sudo apt update
+sudo apt install -y python3-pip python3-venv nodejs npm git build-essential
+```
+
+### 3. Clone the Repository
 
 ```bash
 git clone https://github.com/your-org/Customer-Support-Agent.git
