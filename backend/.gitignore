@@ -19,7 +19,7 @@ ENV/
 # =========================
 .env
 .env.*
-!.env.example   # keep example file
+!.env.example
 
 # =========================
 # Logs & runtime files

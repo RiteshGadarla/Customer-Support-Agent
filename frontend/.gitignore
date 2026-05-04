@@ -23,7 +23,7 @@ build/
 
 .env
 .env.*
-!.env.example   # keep example file
+!.env.example
 
 # =========================
 
